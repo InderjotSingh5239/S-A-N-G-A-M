@@ -1,0 +1,331 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #1B1F2A;
+  --base: #F4EFE6;
+  --indigo: #22304F;
+  --indigo-dark: #0E1526;
+  --amber: #D9A441;
+  --clay: #B85C38;
+  --teal: #2F6F62;
+  --card: #EDE6D8;
+  --border: #DED2B8;
+
+  --spot-x: 50%;
+  --spot-y: 50%;
+
+  --section-spacing: 60px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --section-spacing: 104px;
+  }
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--base);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(217, 164, 65, 0.3);
+  color: var(--indigo-dark);
+}
+
+/* ---- Focus states ---- */
+*:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- Gradient text ---- */
+.gradient-text {
+  background: linear-gradient(90deg, var(--clay), var(--amber), var(--teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.gradient-text-amber-clay {
+  background: linear-gradient(90deg, var(--clay), var(--amber));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ---- Hero animated mesh background ---- */
+.mesh-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ---- Hero cursor spotlight ---- */
+.hero-spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    500px circle at var(--spot-x) var(--spot-y),
+    rgba(217, 164, 65, 0.12),
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transition: background 0.1s ease-out;
+}
+
+/* ---- Scroll reveal ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Bento card radial glow ---- */
+.bento-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.bento-card::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -40%;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 164, 65, 0.18), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.bento-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--amber);
+  box-shadow: 0 20px 40px -12px rgba(34, 48, 79, 0.18);
+}
+
+.bento-card:hover::after {
+  opacity: 1;
+}
+
+/* ---- Primary CTA gradient sweep ---- */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  z-index: 1;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(217, 164, 65, 0.5);
+}
+
+.btn-primary:hover::before {
+  transform: translateX(100%);
+}
+
+.btn-primary > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---- Infinite marquee ---- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  will-change: transform;
+  animation: marquee 28s linear infinite;
+}
+
+#integrations:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-mask {
+  overflow: hidden;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+/* ---- Glassmorphic card ---- */
+.glass-card {
+  background: rgba(244, 239, 230, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(217, 164, 65, 0.2);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Timeline gradient line ---- */
+.timeline-line {
+  background: linear-gradient(to bottom, var(--amber), var(--teal));
+}
+
+/* ---- Nav blur ---- */
+.nav-blur {
+  background: rgba(244, 239, 230, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(222, 210, 184, 0.6);
+}
+
+/* ---- Integration / verification cards ---- */
+.integration-card {
+  position: relative;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 300ms ease;
+}
+
+.integration-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 18px 36px -14px rgba(0, 0, 0, 0.55);
+}
+
+.live-dot {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 0 rgba(47, 111, 98, 0.7);
+  animation: live-pulse 2.5s ease-out infinite;
+}
+
+@keyframes live-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(47, 111, 98, 0.65);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(47, 111, 98, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(47, 111, 98, 0);
+  }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .mesh-orb {
+    animation: none !important;
+    opacity: 0.4 !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    transform: none !important;
+    will-change: auto;
+    justify-content: center;
+  }
+
+  .marquee-track .integration-card:nth-child(n + 9) {
+    display: none;
+  }
+
+  .marquee-mask {
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .hero-spotlight::before {
+    display: none;
+  }
+
+  .btn-primary::before {
+    display: none;
+  }
+
+  .live-dot {
+    animation: none;
+  }
+
+  .integration-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
